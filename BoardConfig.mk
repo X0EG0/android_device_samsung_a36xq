@@ -123,6 +123,7 @@ TW_BACKUP_EXCLUSIONS := /data/fonts
 TW_FRAMERATE := 120
 TW_MAX_BRIGHTNESS := 250
 TW_DEFAULT_BRIGHTNESS := 160
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_CUSTOM_CPU_TEMP_PATH := /sys/class/thermal/thermal_zone57/temp
 TW_SCREEN_BLANK_ON_BOOT := true
 
@@ -143,10 +144,9 @@ TARGET_USES_LOGD := true
 TW_DEVICE_VERSION := DevCat3
 
 # Board
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
+#PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_SHIPPING_API_LEVEL := 30
 TARGET_OTA_ASSERT_DEVICE := a36xq
 TARGET_COPY_OUT_VENDOR := vendor
 
-TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 
