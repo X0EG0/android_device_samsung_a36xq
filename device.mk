@@ -14,18 +14,18 @@ AB_OTA_POSTINSTALL_CONFIG += \
     POSTINSTALL_OPTIONAL_system=true
 
 # Boot control HAL
-#PRODUCT_PACKAGES += \
-#    android.hardware.boot@1.0-impl \
-#    android.hardware.boot@1.0-service
+PRODUCT_PACKAGES += \
+    android.hardware.boot@1.0-impl \
+    android.hardware.boot@1.0-service
 
-#PRODUCT_PACKAGES += \
-#    bootctrl.parrot
+PRODUCT_PACKAGES += \
+    bootctrl.parrot
 
 #PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-#    bootctrl.parrot \
-#    libgptutils \
-#    libz \
-#    libcutils
+    bootctrl.parrot \
+    libgptutils \
+    libz \
+    libcutils
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
@@ -35,5 +35,5 @@ PRODUCT_PACKAGES += \
     update_engine_sideload
     
 PRODUCT_PACKAGES += \   
-android.hardware.fastboot@1.0-impl-mock \
+    android.hardware.fastboot@1.0-impl-mock \
     fastbootd
