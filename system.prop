@@ -1,0 +1,5 @@
+ro.display.series=Samsung A36
+ro.product.board=parrot
+ro.board.platform=parrot
+#sys.usb.controller=a600000.dwc3
+ro.boot.dynamic_partitions=true
