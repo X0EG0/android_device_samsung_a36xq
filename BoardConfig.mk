@@ -10,18 +10,6 @@ DEVICE_PATH := device/samsung/a36xq
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
-# A/B
-#AB_OTA_UPDATER := true
-#AB_OTA_PARTITIONS += \
-    vendor \
-    odm \
-    vendor_boot \
-    vendor_dlkm \
-    init_boot \
-    system \
-    product \
-    system_ext \
-    system_dlkm
 BOARD_USES_RECOVERY_AS_BOOT := true
 
 # Architecture
@@ -31,6 +19,9 @@ TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 := 
 TARGET_CPU_VARIANT := generic
 TARGET_CPU_VARIANT_RUNTIME := kryo300
+
+ENABLE_CPUSETS := true
+ENABLE_SCHEDBOOST := true
 
 # APEX
 DEXPREOPT_GENERATE_APEX_IMAGE := true
@@ -91,8 +82,8 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := erofs
 TARGET_OTA_ASSERT_DEVICE := a36xq
 TARGET_COPY_OUT_VENDOR := vendor
 BOARD_USES_QCOM_HARDWARE := true
-QCOM_BOARD_PLATFORMS := 
-TARGET_BOARD_PLATFORM_GPU := 
+QCOM_BOARD_PLATFORMS := parrot
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno710
 
 # Recovery
 BOARD_INCLUDE_RECOVERY_DTBO := true
@@ -166,3 +157,6 @@ BOARD_USES_METADATA_PARTITION := true
 
 # PRODUCT_COPY_FILES directives.
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+
+# Properties
+#TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
