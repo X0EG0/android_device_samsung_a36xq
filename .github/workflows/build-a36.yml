@@ -82,7 +82,7 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         lunch twrp_${DEVICE_NAME}-eng
-        mka vendor_bootimage -j$(nproc --all)
+        mka vendorbootimage -j$(nproc --all)
 
     - name: Verify output
       run: |
