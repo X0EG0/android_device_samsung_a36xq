@@ -91,9 +91,6 @@ TARGET_USERIMAGES_USE_F2FS := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 RECOVERY_SDCARD_ON_DATA := true
 
-# Security patch level
-VENDOR_SECURITY_PATCH := 2021-08-01
-
 # Verified Boot
 BOARD_AVB_ENABLE := true
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
@@ -128,7 +125,7 @@ TW_DEFAULT_BRIGHTNESS := 250
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 #TW_CUSTOM_CPU_TEMP_PATH := /sys/class/thermal/thermal_zone57/temp
 TW_SCREEN_BLANK_ON_BOOT := true
-
+TW_INCLUDE_NTFS_3G := true
 
 # Samsung
 TW_INCLUDE_FASTBOOT := true
