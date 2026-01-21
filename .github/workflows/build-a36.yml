@@ -20,7 +20,7 @@ jobs:
       DEVICE_TREE: https://github.com/DevCat3/android_device_samsung_a36xq
       DEVICE_BRANCH: android-12.1
       MANIFEST_BRANCH: twrp-12.1
-      BUILD_TARGET: vendor_boot
+      BUILD_TARGET: recovery
 
     steps:
 
@@ -68,7 +68,7 @@ jobs:
 
     - name: Enable ccache
       run: |
-        export USE_CCACHE=1
+        echo "export USE_CCACHE=1" >> $GITHUB_ENV
         ccache -M 20G
 
     - name: Set swap
@@ -76,46 +76,46 @@ jobs:
       with:
         swap-size-gb: 16
 
-    - name: Build TWRP vendor_boot
+    - name: Build TWRP Recovery
       run: |
         cd workspace
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         lunch twrp_${DEVICE_NAME}-eng
-        mka vendorbootimage -j$(nproc --all)
+        mka recoveryimage -j$(nproc --all)
 
     - name: Verify output
       run: |
         cd workspace/out/target/product/${DEVICE_NAME}
         ls -lh
 
-        if [ ! -f vendor_boot.img ]; then
-          echo "❌ vendor_boot.img not found"
+        if [ ! -f recovery.img ]; then
+          echo "❌ recovery.img not found"
           exit 1
         fi
 
-        echo "MD5=$(md5sum vendor_boot.img | cut -d ' ' -f1)" >> $GITHUB_ENV
+        echo "MD5=$(md5sum recovery.img | cut -d ' ' -f1)" >> $GITHUB_ENV
 
     - name: Create Odin TAR
       run: |
         cd workspace/out/target/product/${DEVICE_NAME}
-        tar -H ustar -cvf vendor_boot.tar vendor_boot.img
+        tar -H ustar -cvf recovery.tar recovery.img
 
     - name: Upload Release
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          workspace/out/target/product/a36xq/vendor_boot.img
-          workspace/out/target/product/a36xq/vendor_boot.tar
+          workspace/out/target/product/a36xq/recovery.img
+          workspace/out/target/product/a36xq/recovery.tar
         name: "TWRP a36xq - ${{ github.run_id }}"
         tag_name: "a36xq-${{ github.run_id }}"
         body: |
           🔥 Samsung Galaxy A36 TWRP Build
 
           Device: a36xq  
-          Target: vendor_boot  
+          Target: recovery  
           Branch: twrp-12.1  
           MD5: ${{ env.MD5 }}
 
-          Flash with Odin using vendor_boot.tar  
-          Or fastboot using vendor_boot.img
+          Flash with Odin using recovery.tar  
+          Or fastboot using recovery.img
