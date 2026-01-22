@@ -9,6 +9,8 @@ DEVICE_PATH := device/samsung/a36xq
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
+BOARD_USES_RECOVERY_AS_BOOT := true
+
 
 # Architecture
 TARGET_ARCH := arm64
