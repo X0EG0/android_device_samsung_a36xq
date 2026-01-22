@@ -20,7 +20,6 @@ jobs:
       DEVICE_TREE: https://github.com/DevCat3/android_device_samsung_a36xq
       DEVICE_BRANCH: android-12.1
       MANIFEST_BRANCH: twrp-12.1
-      BUILD_TARGET: boot
 
     steps:
 
@@ -54,6 +53,8 @@ jobs:
       run: |
         mkdir workspace
         cd workspace
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
         repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b $MANIFEST_BRANCH
 
     - name: Repo sync
@@ -76,28 +77,28 @@ jobs:
       with:
         swap-size-gb: 16
 
-    - name: Build TWRP boot image
+    - name: Build TWRP vendor_boot image
       run: |
         cd workspace
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
+        export BOARD_USES_VENDOR_BOOTIMAGE=true
+        export BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE=134217728
         lunch twrp_${DEVICE_NAME}-eng
-        mka bootimage -j$(nproc --all)
-
-    - name: Rename boot.img -> vendor_boot.img
+        mka vendorbootimage -j$(nproc --all)
+   
+    - name: Verify vendor_boot.img exists
       run: |
         cd workspace/out/target/product/${DEVICE_NAME}
 
-        if [ ! -f boot.img ]; then
-          echo "❌ boot.img not found"
+        if [ ! -f vendor_boot.img ]; then
+          echo "vendor_boot.img not found"
           exit 1
         fi
 
-        mv boot.img vendor_boot.img
-        echo "✅ Renamed to vendor_boot.img"
-
+        echo "vendor_boot.img built successfully"
         echo "MD5=$(md5sum vendor_boot.img | cut -d ' ' -f1)" >> $GITHUB_ENV
-
+   
     - name: Create Odin TAR
       run: |
         cd workspace/out/target/product/${DEVICE_NAME}
